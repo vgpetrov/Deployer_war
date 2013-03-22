@@ -31,7 +31,7 @@ public class EventService {
 		event.setHost(obj.getHost());
 		
 		SQLiteConnector connection = new SQLiteConnector();
-		IGenericDAO<Event> gen = new EventDAO<Event>(connection.getConnection());
+		IGenericDAO<Event> gen = new EventDAO(connection.getConnection());
 		gen.insert(event);
 		connection.close();
 		return event;
@@ -42,7 +42,7 @@ public class EventService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Event> getList() {
 		SQLiteConnector connection = new SQLiteConnector();
-		IGenericDAO<Event> generic = new EventDAO<Event>(connection.getConnection());
+		IGenericDAO<Event> generic = new EventDAO(connection.getConnection());
 		List<Event> result = generic.selectALL();
 		connection.close();
 		return result;

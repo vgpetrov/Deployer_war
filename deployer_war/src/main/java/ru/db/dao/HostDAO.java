@@ -10,7 +10,7 @@ import java.util.List;
 
 import ru.db.entities.Host;
 
-public class HostDAO<T> implements IGenericDAO<T> {
+public class HostDAO implements IGenericDAO<Host> {
 
 	private static final String insertSQL = "insert into hosts(id, host_name, profile) values(?, ?, ?)";
 	private static final String selectSQL = "select * from hosts";
@@ -22,18 +22,17 @@ public class HostDAO<T> implements IGenericDAO<T> {
 		this.conn = conn;
 	}
 
-	public void insert(T object) {
+	public void insert(Host object) {
 		//Connection conn = null;
 		PreparedStatement pstm = null;
-		Host obj = (Host) object;
 		try {
 			//conn = SQLiteDataSource.getDataSource().getConnection();
 			conn.setAutoCommit(true);
 
 			pstm = conn.prepareStatement(insertSQL);
-			pstm.setInt(1, obj.getId());
-			pstm.setString(2, obj.getHostName());
-			pstm.setString(3, obj.getProfile());
+			pstm.setInt(1, object.getId());
+			pstm.setString(2, object.getHostName());
+			pstm.setString(3, object.getProfile());
 			pstm.execute();
 
 		} catch (SQLException e) {
@@ -49,11 +48,11 @@ public class HostDAO<T> implements IGenericDAO<T> {
 		}
 	}
 
-	public List<T> selectALL() {
+	public List<Host> selectALL() {
 		//Connection conn = null;
 		Statement stm = null;
 		ResultSet rs = null;
-		List<T> hostList = new ArrayList<T>();
+		List<Host> hostList = new ArrayList<Host>();
 		try {
 			//conn = SQLiteDataSource.getDataSource().getConnection();
 			conn.setAutoCommit(true);
@@ -64,7 +63,7 @@ public class HostDAO<T> implements IGenericDAO<T> {
 			while (rs.next()) {
 				Host host = new Host(rs.getInt("id"),
 						rs.getString("host_name"), rs.getString("profile"));
-				hostList.add((T) host);
+				hostList.add(host);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -84,7 +83,7 @@ public class HostDAO<T> implements IGenericDAO<T> {
 		return hostList;
 	}
 	
-	public T selectById(Integer id) {
+	public Host selectById(Integer id) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		Host host = null;
@@ -115,7 +114,7 @@ public class HostDAO<T> implements IGenericDAO<T> {
 				e.printStackTrace();
 			}
 		}
-		return (T) host;
+		return host;
 	}
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import ru.db.entities.Event;
 import ru.db.entities.Host;
 
-public class EventDAO<T> implements IGenericDAO<T> {
+public class EventDAO implements IGenericDAO<Event> {
 
 	private static final String insertSQL = 
 			"insert into events(event_time, event, product_name, version, host_id) values(?, ?, ?, ?, ?)";
@@ -24,20 +24,19 @@ public class EventDAO<T> implements IGenericDAO<T> {
 		this.conn = conn;
 	}
 
-	public void insert(T object) {
+	public void insert(Event object) {
 		//Connection conn = null;
 		PreparedStatement pstm = null;
-		Event event = (Event) object;
 		try {
 			conn = SQLiteDataSource.getDataSource().getConnection();
 			conn.setAutoCommit(true);
 			
 			pstm = conn.prepareStatement(insertSQL);
-			pstm.setDate(1, new java.sql.Date(event.getEventDate().getTime()));
-			pstm.setString(2, event.getEventName());
-			pstm.setString(3, event.getProductName());
-			pstm.setString(4, event.getVersion());
-			pstm.setInt(5, event.getHost().getId());
+			pstm.setDate(1, new java.sql.Date(object.getEventDate().getTime()));
+			pstm.setString(2, object.getEventName());
+			pstm.setString(3, object.getProductName());
+			pstm.setString(4, object.getVersion());
+			pstm.setInt(5, object.getHost().getId());
 			pstm.execute();
 			
 		} catch (SQLException e) {
@@ -53,11 +52,11 @@ public class EventDAO<T> implements IGenericDAO<T> {
 		}
 	}
 
-	public List<T> selectALL() {
+	public List<Event> selectALL() {
 		//Connection conn = null;
 		Statement stm = null;
 		ResultSet rs = null;
-		List<T> eventsList = new ArrayList<T>(); 
+		List<Event> eventsList = new ArrayList<Event>(); 
 		try {
 			conn = SQLiteDataSource.getDataSource().getConnection();
 			conn.setAutoCommit(true);
@@ -77,7 +76,7 @@ public class EventDAO<T> implements IGenericDAO<T> {
 				host.setProfile(rs.getString("profile"));
 				event.setHost(host);
 				
-				eventsList.add((T) event);
+				eventsList.add(event);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

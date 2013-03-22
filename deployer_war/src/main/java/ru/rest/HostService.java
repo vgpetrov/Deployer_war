@@ -27,7 +27,7 @@ public class HostService {
     	host.setProfile(obj.getProfile());
     	
     	SQLiteConnector connection = new SQLiteConnector();
-		IGenericDAO<Host> gen = new EventDAO<Host>(connection.getConnection());
+		IGenericDAO<Host> gen = new HostDAO(connection.getConnection());
 		gen.insert(host);
 		connection.close();
 		return host;
@@ -38,7 +38,7 @@ public class HostService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Host> getList() {
 		SQLiteConnector connection = new SQLiteConnector();
-		IGenericDAO<Host> generic = new HostDAO<Host>(connection.getConnection());
+		IGenericDAO<Host> generic = new HostDAO(connection.getConnection());
 		List<Host> result = generic.selectALL();
 		connection.close();
 		return result;
