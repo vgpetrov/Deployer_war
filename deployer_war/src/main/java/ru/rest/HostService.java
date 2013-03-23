@@ -17,12 +17,12 @@ import ru.db.entities.Host;
 @Path("hostService")
 public class HostService {
 	
+	// curl -i -X GET -H 'Content-Type: application/json' -d '{"hostName":"newHost", "profile":"AppSrv03"}' http://localhost:8080/deployer_war/rest/hostService
     @GET
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Host create(Host obj) {
     	Host host = new Host();
-    	host.setId(obj.getId());
     	host.setHostName(obj.getHostName());
     	host.setProfile(obj.getProfile());
     	
@@ -33,6 +33,7 @@ public class HostService {
 		return host;
 	}
 	
+    // curl -i -X GET http://localhost:8080/deployer_war/rest/hostService/list
 	@Path("/list")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

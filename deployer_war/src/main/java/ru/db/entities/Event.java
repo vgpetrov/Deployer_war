@@ -14,6 +14,7 @@ public class Event {
 	private String eventName;
 	private String productName;
 	private String version;
+	private String revision;
 	private Host host;
 	
 	public Event() {
@@ -21,13 +22,22 @@ public class Event {
 	}
 
 	public Event(Date eventDate, String eventName, String productName,
-			String version, Host host) {
+			String version, String revision, Host host) {
 		super();
 		this.eventDate = eventDate;
 		this.eventName = eventName;
 		this.productName = productName;
 		this.version = version;
+		this.revision = revision;
 		this.host = host;
+	}
+	
+	public String getRevision() {
+		return revision;
+	}
+
+	public void setRevision(String revision) {
+		this.revision = revision;
 	}
 
 	public Date getEventDate() {

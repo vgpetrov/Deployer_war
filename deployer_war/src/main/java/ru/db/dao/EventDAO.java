@@ -14,7 +14,7 @@ import ru.db.entities.Host;
 public class EventDAO implements IGenericDAO<Event> {
 
 	private static final String insertSQL = 
-			"insert into events(event_time, event, product_name, version, host_id) values(?, ?, ?, ?, ?)";
+			"insert into events(event_time, event, product_name, version, revision, host_id) values(?, ?, ?, ?, ?, ?)";
 	private static final String selectSQL = "select * from events";
 	private static final String selectJoin = "select * from events inner join hosts on events.host_id = hosts.id";
 	
@@ -28,7 +28,7 @@ public class EventDAO implements IGenericDAO<Event> {
 		//Connection conn = null;
 		PreparedStatement pstm = null;
 		try {
-			conn = SQLiteDataSource.getDataSource().getConnection();
+//			conn = SQLiteDataSource.getDataSource().getConnection();
 			conn.setAutoCommit(true);
 			
 			pstm = conn.prepareStatement(insertSQL);
@@ -36,7 +36,8 @@ public class EventDAO implements IGenericDAO<Event> {
 			pstm.setString(2, object.getEventName());
 			pstm.setString(3, object.getProductName());
 			pstm.setString(4, object.getVersion());
-			pstm.setInt(5, object.getHost().getId());
+			pstm.setString(5, object.getRevision());
+			pstm.setInt(6, object.getHost().getId());
 			pstm.execute();
 			
 		} catch (SQLException e) {
@@ -58,8 +59,8 @@ public class EventDAO implements IGenericDAO<Event> {
 		ResultSet rs = null;
 		List<Event> eventsList = new ArrayList<Event>(); 
 		try {
-			conn = SQLiteDataSource.getDataSource().getConnection();
-			conn.setAutoCommit(true);
+//			conn = SQLiteDataSource.getDataSource().getConnection();
+//			conn.setAutoCommit(true);
 			
 			stm = conn.createStatement();
 			rs = stm.executeQuery(selectJoin);

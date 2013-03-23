@@ -14,11 +14,12 @@ import ru.db.dao.HostDAO;
 import ru.db.dao.IGenericDAO;
 import ru.db.dao.SQLiteConnector;
 import ru.db.entities.Event;
+import ru.db.entities.Host;
 
 @Path("eventService")
 public class EventService {
 	
-	// curl -i -X GET -H 'Content-Type: application/json' -d '{"eventDate": "", "eventName": "install", "productName":"NSI", "version":"44115", host:{"id":"1", "hostName":"vasya" ,"profile":"petya"}}' http://localhost:8080/deployer_war/rest/eventService
+	// curl -i -X GET -H 'Content-Type: application/json' -d '{"eventName": "install", "productName":"NSI", "version":"02.008.00", "revision":"44220", "host":{"hostName":"newHost", "profile":"AppSrv02"}}' http://localhost:8080/deployer_war/rest/eventService
     @GET
     @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -28,15 +29,28 @@ public class EventService {
 		event.setEventName(obj.getEventName());
 		event.setProductName(obj.getProductName());
 		event.setVersion(obj.getVersion());
-		event.setHost(obj.getHost());
+		event.setRevision(obj.getRevision());
+		//event.setHost(obj.getHost());
 		
 		SQLiteConnector connection = new SQLiteConnector();
 		IGenericDAO<Event> gen = new EventDAO(connection.getConnection());
+		
+		HostDAO hosts = new HostDAO(connection.getConnection());
+		Host host = hosts.selectByNameAndProfile(obj.getHost().getHostName(), obj.getHost().getProfile());
+		if (host==null) {
+			hosts.insert(obj.getHost());
+			host = hosts.selectByNameAndProfile(obj.getHost().getHostName(), obj.getHost().getProfile());
+			event.setHost(host);
+		} else {
+			event.setHost(host);
+		}
+		
 		gen.insert(event);
 		connection.close();
 		return event;
 	}
 
+    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/list
 	@GET
 	@Path("/list")
 	@Produces(MediaType.APPLICATION_JSON)

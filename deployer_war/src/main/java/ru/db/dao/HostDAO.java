@@ -12,9 +12,9 @@ import ru.db.entities.Host;
 
 public class HostDAO implements IGenericDAO<Host> {
 
-	private static final String insertSQL = "insert into hosts(id, host_name, profile) values(?, ?, ?)";
+	private static final String insertSQL = "insert into hosts(host_name, profile) values(?, ?)";
 	private static final String selectSQL = "select * from hosts";
-	private static final String selectSQLById = "select * from hosts where id = ?";
+	private static final String selectSQLByNameAndProfile = "select * from hosts where host_name = ? and profile = ?";
 	
 	private Connection conn;
 	
@@ -23,16 +23,15 @@ public class HostDAO implements IGenericDAO<Host> {
 	}
 
 	public void insert(Host object) {
-		//Connection conn = null;
+//		Connection conn = null;
 		PreparedStatement pstm = null;
 		try {
-			//conn = SQLiteDataSource.getDataSource().getConnection();
+//			conn = SQLiteDataSource.getDataSource().getConnection();
 			conn.setAutoCommit(true);
 
 			pstm = conn.prepareStatement(insertSQL);
-			pstm.setInt(1, object.getId());
-			pstm.setString(2, object.getHostName());
-			pstm.setString(3, object.getProfile());
+			pstm.setString(1, object.getHostName());
+			pstm.setString(2, object.getProfile());
 			pstm.execute();
 
 		} catch (SQLException e) {
@@ -49,13 +48,13 @@ public class HostDAO implements IGenericDAO<Host> {
 	}
 
 	public List<Host> selectALL() {
-		//Connection conn = null;
+//		Connection conn = null;
 		Statement stm = null;
 		ResultSet rs = null;
 		List<Host> hostList = new ArrayList<Host>();
 		try {
-			//conn = SQLiteDataSource.getDataSource().getConnection();
-			conn.setAutoCommit(true);
+//			conn = SQLiteDataSource.getDataSource().getConnection();
+//			conn.setAutoCommit(true);
 
 			stm = conn.createStatement();
 			rs = stm.executeQuery(selectSQL);
@@ -83,19 +82,18 @@ public class HostDAO implements IGenericDAO<Host> {
 		return hostList;
 	}
 	
-	public Host selectById(Integer id) {
+	public Host selectByNameAndProfile(String name, String profile) {
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		Host host = null;
 		try {
-			conn.setAutoCommit(true);
-
-			pstm = conn.prepareStatement(selectSQLById);
-			pstm.setInt(1, id);
+			//conn.setAutoCommit(true);
+			pstm = conn.prepareStatement(selectSQLByNameAndProfile);
+			pstm.setString(1, name);
+			pstm.setString(2, profile);
 			rs = pstm.executeQuery();
 			
-			if(rs!=null) {
-				rs.next();
+			if(rs.next()) {
 				host = new Host(rs.getInt("id"),
 						rs.getString("host_name"), rs.getString("profile"));
 			}
