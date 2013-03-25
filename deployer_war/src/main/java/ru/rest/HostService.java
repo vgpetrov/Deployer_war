@@ -8,7 +8,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import ru.db.dao.EventDAO;
 import ru.db.dao.HostDAO;
 import ru.db.dao.IGenericDAO;
 import ru.db.dao.SQLiteConnector;
@@ -19,8 +18,8 @@ public class HostService {
 	
 	// curl -i -X GET -H 'Content-Type: application/json' -d '{"hostName":"newHost", "profile":"AppSrv03"}' http://localhost:8080/deployer_war/rest/hostService
     @GET
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
 	public Host create(Host obj) {
     	Host host = new Host();
     	host.setHostName(obj.getHostName());

@@ -15,8 +15,10 @@ public class EventDAO implements IGenericDAO<Event> {
 
 	private static final String insertSQL = 
 			"insert into events(event_time, event, product_name, version, revision, host_id) values(?, ?, ?, ?, ?, ?)";
-	private static final String selectSQL = "select * from events";
 	private static final String selectJoin = "select * from events inner join hosts on events.host_id = hosts.id";
+	private static final String selectApps = "select max(event_time) event_time,"
+											 + "event, product_name, version, revision "   
+											 + "from events where host_id = ? and event = 'install'";
 	
 	private Connection conn;
 	
@@ -71,6 +73,7 @@ public class EventDAO implements IGenericDAO<Event> {
 				event.setEventName(rs.getString("event"));
 				event.setProductName(rs.getString("product_name"));
 				event.setVersion(rs.getString("version"));
+				event.setRevision(rs.getString("revision"));
 				Host host = new Host();
 				host.setId(rs.getInt("id"));
 				host.setHostName(rs.getString("host_name"));
@@ -97,4 +100,43 @@ public class EventDAO implements IGenericDAO<Event> {
 		return eventsList;
 	}
 
+	public List<Event> selectApps(Integer id) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Event> eventsList = new ArrayList<Event>(); 
+		try {
+			
+			pstm = conn.prepareStatement(selectApps);
+			pstm.setInt(1, id);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Event event = new Event();
+				event.setEventDate(rs.getDate("event_time"));
+				event.setEventName(rs.getString("event"));
+				event.setProductName(rs.getString("product_name"));
+				event.setVersion(rs.getString("version"));
+				event.setRevision(rs.getString("revision"));
+				event.setHost(null);
+				
+				eventsList.add(event);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs!=null) {
+					rs.close();
+				}
+				if (pstm!=null) {
+					pstm.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return eventsList;
+	}
+	
 }

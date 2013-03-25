@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -21,8 +22,8 @@ public class EventService {
 	
 	// curl -i -X GET -H 'Content-Type: application/json' -d '{"eventName": "install", "productName":"NSI", "version":"02.008.00", "revision":"44220", "host":{"hostName":"newHost", "profile":"AppSrv02"}}' http://localhost:8080/deployer_war/rest/eventService
     @GET
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
 	public Event create(Event obj) {
 		Event event = new Event();
 		event.setEventDate(new Date());
@@ -58,6 +59,18 @@ public class EventService {
 		SQLiteConnector connection = new SQLiteConnector();
 		IGenericDAO<Event> generic = new EventDAO(connection.getConnection());
 		List<Event> result = generic.selectALL();
+		connection.close();
+		return result;
+	}
+	
+    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/2
+	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Event> getAppList(@PathParam("id") Integer id) {
+		SQLiteConnector connection = new SQLiteConnector();
+		EventDAO eventDao = new EventDAO(connection.getConnection());
+		List<Event> result = eventDao.selectApps(id);
 		connection.close();
 		return result;
 	}
