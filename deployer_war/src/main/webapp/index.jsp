@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,10 +10,8 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
 <script>
-	$(document)
-			.ready(
-					function() {
-
+	$(document).ready(
+			function() {
 						function initHostList() {
 							res = [];
 							map = {};
@@ -43,6 +40,7 @@
 							return res;
 						}
 
+						$("#search").val("");
 						$("#search").typeahead({
 							source : initHostList(),
 							updater : function(item) {
@@ -50,41 +48,56 @@
 								return item;
 							}
 						});
+						
+						function showApplications(id) {
+							$(".container").append("<div id='lists'></div>");
+							$("#lists").append("<table cellpadding='0' cellspacing='0' border='0' class='display' id='example'></table>");
+						    $('#example').dataTable( {
+						    	"bProcessing": true,
+						        "sAjaxSource": "/deployer_war/rest/eventService/"+id,
+						        "sAjaxDataProp": "event",
+						        "aoColumns": [
+						                      { "mData": "eventDate", "sTitle":"Дата" },
+						                      { "mData": "eventName", "sTitle":"Событие" },
+						                      { "mData": "productName", "sTitle":"Название" },
+						                      { "mData": "revision", "sTitle":"Ревизия" },
+						                      { "mData": "version", "sTitle":"Версия" }]
+						    } );
+						}
+						
+						function showHistory() {
+							$(".container").append("<div id='lists'></div>");
+							$("#lists").append("<table cellpadding='0' cellspacing='0' border='0' class='display' id='example'></table>");
+						    $('#example').dataTable( {
+						    	"bProcessing": true,
+						        "sAjaxSource": "/deployer_war/rest/eventService/list",
+						        "sAjaxDataProp": "event",
+						        "aoColumns": [
+						                      { "mData": "eventDate", "sTitle":"Дата" },
+						                      { "mData": "eventName", "sTitle":"Событие" },
+						                      { "mData": "productName", "sTitle":"Название" },
+						                      { "mData": "revision", "sTitle":"Ревизия" },
+						                      { "mData": "version", "sTitle":"Версия" }]
+						    } );
+						}
+						
+						function close() {
+							$("#lists").remove();
+						}
 
 						$("#historyList").click(function() {
 							$("#appsList").removeAttr("class");
 							$("#historyList").attr("class", "active");
+							close();
+							showHistory();
 						});
 
 						$("#appsList").click(function() {
 							$("#historyList").removeAttr("class");
 							$("#appsList").attr("class", "active");
+							close();
+							showApplications(map[$("#search").val()]);
 						});
-						
-					    $('#example').dataTable( {
-					        "aaData": [
-					            /* Reduced data set */
-					            [ "Trident", "Internet Explorer 4.0", "Win 95+", 4, "X" ],
-					            [ "Trident", "Internet Explorer 5.0", "Win 95+", 5, "C" ],
-					            [ "Trident", "Internet Explorer 5.5", "Win 95+", 5.5, "A" ],
-					            [ "Trident", "Internet Explorer 6.0", "Win 98+", 6, "A" ],
-					            [ "Trident", "Internet Explorer 7.0", "Win XP SP2+", 7, "A" ],
-					            [ "Gecko", "Firefox 1.5", "Win 98+ / OSX.2+", 1.8, "A" ],
-					            [ "Gecko", "Firefox 2", "Win 98+ / OSX.2+", 1.8, "A" ],
-					            [ "Gecko", "Firefox 3", "Win 2k+ / OSX.3+", 1.9, "A" ],
-					            [ "Webkit", "Safari 1.2", "OSX.3", 125.5, "A" ],
-					            [ "Webkit", "Safari 1.3", "OSX.3", 312.8, "A" ],
-					            [ "Webkit", "Safari 2.0", "OSX.4+", 419.3, "A" ],
-					            [ "Webkit", "Safari 3.0", "OSX.4+", 522.1, "A" ]
-					        ],
-					        "aoColumns": [
-					            { "sTitle": "Engine" },
-					            { "sTitle": "Browser" },
-					            { "sTitle": "Platform" },
-					            { "sTitle": "Version", "sClass": "center" },
-					            { "sTitle": "Grade", "sClass": "center" }
-					        ]
-					    } );    
 
 					});
 </script>
@@ -96,14 +109,11 @@
 		</div>
 	</div>
 	<div class="container">
-		Выбрать сервер <input type="text" id="search">
+		<div><span>Выбрать сервер </span><input type="text" id="search"></div>
 		<ul class="nav nav-tabs">
 			<li id="appsList" class="active"><a>Приложения</a></li>
 			<li id="historyList"><a>История</a></li>
 		</ul>
-		<div id="#demo">
-			<table cellpadding="0" cellspacing="0" border="0" class="display" id="example"></table>
-		</div>
 	</div>
 </body>
 </html>

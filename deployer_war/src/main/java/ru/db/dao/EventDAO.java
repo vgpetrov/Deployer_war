@@ -18,7 +18,8 @@ public class EventDAO implements IGenericDAO<Event> {
 	private static final String selectJoin = "select * from events inner join hosts on events.host_id = hosts.id";
 	private static final String selectApps = "select max(event_time) event_time,"
 											 + "event, product_name, version, revision "   
-											 + "from events where host_id = ? and event = 'install'";
+											 + "from events where host_id = ? and event = 'install' "
+											 + "group by product_name";
 	
 	private Connection conn;
 	
