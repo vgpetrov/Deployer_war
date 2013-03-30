@@ -8,7 +8,7 @@
 <link href="css/jquery.dataTables.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
+<script src="js/jquery.dataTables.js"></script>
 <script>
 	$(document).ready(
 			function() {
@@ -36,6 +36,7 @@
 																		+ result.host[i].profile);
 													}
 												}
+												return res;
 											});
 							return res;
 						}
@@ -45,6 +46,12 @@
 							source : initHostList(),
 							updater : function(item) {
 								console.log(map[item]);
+								close();
+								if($("#appsList").attr("class")=="active") {
+									showApplications(map[item]);
+								}else if($("#historyList").attr("class")=="active") {
+									showHistory(map[item]);
+								}
 								return item;
 							}
 						});
