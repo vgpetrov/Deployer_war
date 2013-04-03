@@ -49,7 +49,7 @@
 								close();
 								if($("#appsList").attr("class")=="active") {
 									showApplications(map[item]);
-								}else if($("#historyList").attr("class")=="active") {
+								} else if ($("#historyList").attr("class")=="active") {
 									showHistory(map[item]);
 								}
 								return item;
@@ -57,11 +57,40 @@
 						});
 						
 						function showApplications(id) {
+							if(id!=undefined) {
+								$(".container").append("<div id='lists'></div>");
+								$("#lists").append("<table cellpadding='0' cellspacing='0' border='0' class='display' id='example'></table>");
+						    	$('#example').dataTable( {
+						    		"sPaginationType": "full_numbers",
+						    		"bProcessing": true,
+						        	"sAjaxSource": "/deployer_war/rest/eventService/"+id,
+						        	"sAjaxDataProp": "event",
+						        	"aoColumns": [
+						                     	  { "mData": "eventDate", "sTitle":"Дата" },
+						                    	  { "mData": "eventName", "sTitle":"Событие" },
+						                	      { "mData": "productName", "sTitle":"Название" },
+						            	          { "mData": "revision", "sTitle":"Ревизия" },
+						        	              { "mData": "version", "sTitle":"Версия" }]
+						    	} );
+								$("#example tbody").delegate("tr", "click", function() {
+									var hostId = map[$("#search").val()];
+									var appName = $("td:eq(2)", this).text();
+									$("#historyList").removeAttr("class");
+									$("#appsList").removeAttr("class");
+									$("#appHistoryList").attr("class", "active");
+									close();
+									showAppsHistory(hostId, appName);
+								});
+							}
+						}
+						
+						function showAppsHistory(id, appName) {
 							$(".container").append("<div id='lists'></div>");
 							$("#lists").append("<table cellpadding='0' cellspacing='0' border='0' class='display' id='example'></table>");
 						    $('#example').dataTable( {
+						    	"sPaginationType": "full_numbers",
 						    	"bProcessing": true,
-						        "sAjaxSource": "/deployer_war/rest/eventService/"+id,
+						        "sAjaxSource": "/deployer_war/rest/eventService/" + id + "/" + appName,
 						        "sAjaxDataProp": "event",
 						        "aoColumns": [
 						                      { "mData": "eventDate", "sTitle":"Дата" },
@@ -72,12 +101,13 @@
 						    } );
 						}
 						
-						function showHistory() {
+						function showHistory(id) {
 							$(".container").append("<div id='lists'></div>");
 							$("#lists").append("<table cellpadding='0' cellspacing='0' border='0' class='display' id='example'></table>");
 						    $('#example').dataTable( {
+						    	"sPaginationType": "full_numbers",
 						    	"bProcessing": true,
-						        "sAjaxSource": "/deployer_war/rest/eventService/list",
+						        "sAjaxSource": "/deployer_war/rest/eventService/"+ id +"/list",
 						        "sAjaxDataProp": "event",
 						        "aoColumns": [
 						                      { "mData": "eventDate", "sTitle":"Дата" },
@@ -92,18 +122,20 @@
 							$("#lists").remove();
 						}
 
-						$("#historyList").click(function() {
-							$("#appsList").removeAttr("class");
-							$("#historyList").attr("class", "active");
-							close();
-							showHistory();
-						});
-
 						$("#appsList").click(function() {
 							$("#historyList").removeAttr("class");
+							$("#appHistoryList").removeAttr("class");
 							$("#appsList").attr("class", "active");
 							close();
 							showApplications(map[$("#search").val()]);
+						});
+						
+						$("#historyList").click(function() {
+							$("#appsList").removeAttr("class");
+							$("#appHistoryList").removeAttr("class");
+							$("#historyList").attr("class", "active");
+							close();
+							showHistory(map[$("#search").val()]);
 						});
 
 					});
@@ -119,7 +151,8 @@
 		<div><span>Выбрать сервер </span><input type="text" id="search"></div>
 		<ul class="nav nav-tabs">
 			<li id="appsList" class="active"><a>Приложения</a></li>
-			<li id="historyList"><a>История</a></li>
+			<li id="appHistoryList"><a>История приложения</a></li>
+			<li id="historyList"><a>История сервера</a></li>
 		</ul>
 	</div>
 </body>

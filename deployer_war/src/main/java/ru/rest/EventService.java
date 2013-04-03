@@ -74,5 +74,29 @@ public class EventService {
 		connection.close();
 		return result;
 	}
+	
+    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/2/NSI
+	@GET
+	@Path("/{id}/{name}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Event> getAppHistoryList(@PathParam("id") Integer id, @PathParam("name") String name) {
+		SQLiteConnector connection = new SQLiteConnector();
+		EventDAO eventDao = new EventDAO(connection.getConnection());
+		List<Event> result = eventDao.selectAppsHistory(id, name);
+		connection.close();
+		return result;
+	}
 
+    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/1/list
+	@GET
+	@Path("/{id}/list")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Event> getHistoryList(@PathParam("id") Integer id) {
+		SQLiteConnector connection = new SQLiteConnector();
+		EventDAO eventDao = new EventDAO(connection.getConnection());
+		List<Event> result = eventDao.selectHistory(id);
+		connection.close();
+		return result;
+	}
+	
 }

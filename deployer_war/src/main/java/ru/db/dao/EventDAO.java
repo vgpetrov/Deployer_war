@@ -20,6 +20,11 @@ public class EventDAO implements IGenericDAO<Event> {
 											 + "event, product_name, version, revision "   
 											 + "from events where host_id = ? and event = 'install' "
 											 + "group by product_name";
+	private static final String selectAppsHistory = "select event_time, event, product_name, version, revision "
+													+ "from events where host_id = ? and product_name = ?";
+	private static final String selectHistory = "select event_time, event, product_name, version, revision "
+													+ "from events where host_id = ?";
+	
 	
 	private Connection conn;
 	
@@ -108,6 +113,85 @@ public class EventDAO implements IGenericDAO<Event> {
 		try {
 			
 			pstm = conn.prepareStatement(selectApps);
+			pstm.setInt(1, id);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Event event = new Event();
+				event.setEventDate(rs.getDate("event_time"));
+				event.setEventName(rs.getString("event"));
+				event.setProductName(rs.getString("product_name"));
+				event.setVersion(rs.getString("version"));
+				event.setRevision(rs.getString("revision"));
+				event.setHost(null);
+				
+				eventsList.add(event);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs!=null) {
+					rs.close();
+				}
+				if (pstm!=null) {
+					pstm.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return eventsList;
+	}
+	
+	public List<Event> selectAppsHistory(Integer id, String appName) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Event> eventsList = new ArrayList<Event>(); 
+		try {
+			
+			pstm = conn.prepareStatement(selectAppsHistory);
+			pstm.setInt(1, id);
+			pstm.setString(2, appName);
+			rs = pstm.executeQuery();
+
+			while (rs.next()) {
+				Event event = new Event();
+				event.setEventDate(rs.getDate("event_time"));
+				event.setEventName(rs.getString("event"));
+				event.setProductName(rs.getString("product_name"));
+				event.setVersion(rs.getString("version"));
+				event.setRevision(rs.getString("revision"));
+				event.setHost(null);
+				
+				eventsList.add(event);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs!=null) {
+					rs.close();
+				}
+				if (pstm!=null) {
+					pstm.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return eventsList;
+	}
+	
+	public List<Event> selectHistory(Integer id) {
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		List<Event> eventsList = new ArrayList<Event>(); 
+		try {
+			
+			pstm = conn.prepareStatement(selectHistory);
 			pstm.setInt(1, id);
 			rs = pstm.executeQuery();
 
