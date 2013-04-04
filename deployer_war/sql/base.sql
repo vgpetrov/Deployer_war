@@ -10,5 +10,7 @@ CREATE TABLE IF NOT EXISTS Events (
 CREATE TABLE IF NOT EXISTS Hosts (
   id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
   host_name varchar(60) NOT NULL,
-  profile varchar(60) NOT NULL
+  profile varchar(60) NOT NULL,
+  web_port INTEGER,
+  admin_port INTEGER
 );

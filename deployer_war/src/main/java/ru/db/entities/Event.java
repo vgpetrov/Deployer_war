@@ -4,87 +4,87 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement
 public class Event {
-	
-	private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-	
-	private Date eventDate;
-	private String eventName;
-	private String productName;
-	private String version;
-	private String revision;
-	private Host host;
-	
-	public Event() {
-		super();
-	}
 
-	public Event(Date eventDate, String eventName, String productName,
-			String version, String revision, Host host) {
-		super();
-		this.eventDate = eventDate;
-		this.eventName = eventName;
-		this.productName = productName;
-		this.version = version;
-		this.revision = revision;
-		this.host = host;
-	}
-	
-	public String getRevision() {
-		return revision;
-	}
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
-	public void setRevision(String revision) {
-		this.revision = revision;
-	}
+    private Date eventDate;
+    private String eventName;
+    private String productName;
+    private String version;
+    private String revision;
+    private Host host;
 
-	public Date getEventDate() {
-		return eventDate;
-	}
+    public Event() {
+        super();
+    }
 
-	public void setEventDate(Date eventDate) {
-		this.eventDate = eventDate;
-	}
+    public Event(Date eventDate, String eventName, String productName, String version, String revision, Host host) {
+        super();
+        this.eventDate = eventDate;
+        this.eventName = eventName;
+        this.productName = productName;
+        this.version = version;
+        this.revision = revision;
+        this.host = host;
+    }
 
-	public String getEventName() {
-		return eventName;
-	}
+    public String getRevision() {
+        return revision;
+    }
 
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
+    public void setRevision(String revision) {
+        this.revision = revision;
+    }
 
-	public String getProductName() {
-		return productName;
-	}
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    public Date getEventDate() {
+        return eventDate;
+    }
 
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
+    public void setEventDate(Date eventDate) {
+        this.eventDate = eventDate;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public String getEventName() {
+        return eventName;
+    }
 
-	public void setVersion(String version) {
-		this.version = version;
-	}
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
 
-	public Host getHost() {
-		return host;
-	}
+    public String getProductName() {
+        return productName;
+    }
 
-	public void setHost(Host host) {
-		this.host = host;
-	}
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
-	@Override
-	public String toString() {
-		return "Events [eventDate=" + dateFormat.format(eventDate) + ", eventName=" + eventName
-				+ ", productName=" + productName + ", version=" + version
-				+ ", host=" + host.toString() + "]";
-	}
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public Host getHost() {
+        return host;
+    }
+
+    public void setHost(Host host) {
+        this.host = host;
+    }
+
+    @Override
+    public String toString() {
+        return "Events [eventDate=" + dateFormat.format(eventDate) + ", eventName=" + eventName + ", productName="
+                + productName + ", version=" + version + ", host=" + host.toString() + "]";
+    }
 
 }
