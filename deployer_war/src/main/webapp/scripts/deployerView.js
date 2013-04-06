@@ -73,9 +73,6 @@ $(document).ready(
                             "mData" : "eventDate",
                             "sTitle" : "Дата"
                         }, {
-                            "mData" : "eventName",
-                            "sTitle" : "Событие"
-                        }, {
                             "mData" : "productName",
                             "sTitle" : "Название"
                         }, {
@@ -88,7 +85,7 @@ $(document).ready(
                     });
                     $("#example tbody").delegate("tr", "click", function() {
                         var hostId = map[$("#search").val()];
-                        var appName = $("td:eq(2)", this).text();
+                        var appName = $("td:eq(1)", this).text();
                         $("#historyList").removeAttr("class");
                         $("#appsList").removeAttr("class");
                         $("#appHistoryList").attr("class", "active");

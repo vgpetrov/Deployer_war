@@ -62,7 +62,8 @@ public class HostDAO implements IGenericDAO<Host> {
             rs = stm.executeQuery(selectSQL);
 
             while (rs.next()) {
-                Host host = new Host(rs.getInt("id"), rs.getString("host_name"), rs.getString("profile"), rs.getInt("web_port"), rs.getInt("admin_port"));
+                Host host = new Host(rs.getInt("id"), rs.getString("host_name"), rs.getString("profile"),
+                        rs.getInt("web_port"), rs.getInt("admin_port"));
                 hostList.add(host);
             }
         } catch (SQLException e) {
@@ -95,7 +96,8 @@ public class HostDAO implements IGenericDAO<Host> {
             rs = pstm.executeQuery();
 
             if (rs.next()) {
-                host = new Host(rs.getInt("id"), rs.getString("host_name"), rs.getString("profile"), rs.getInt("web_port"), rs.getInt("admin_port"));
+                host = new Host(rs.getInt("id"), rs.getString("host_name"), rs.getString("profile"),
+                        rs.getInt("web_port"), rs.getInt("admin_port"));
             }
 
         } catch (SQLException e) {
