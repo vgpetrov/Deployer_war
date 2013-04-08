@@ -2621,6 +2621,7 @@
 			 * drawing for us. Otherwise we draw the table regardless of the Ajax source - this allows
 			 * the table to look initialised for Ajax sourcing data (show 'loading' message possibly)
 			 */
+	        _fnProcessingDisplay( oSettings, false );
 			if ( oSettings.oFeatures.bSort )
 			{
 				_fnSort( oSettings );

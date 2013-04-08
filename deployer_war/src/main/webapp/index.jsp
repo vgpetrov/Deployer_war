@@ -20,7 +20,7 @@
 	</div>
 	<div class="container">
 		<div>
-			<span>Выбрать сервер </span><input type="text" id="search">
+			<span>Выбрать сервер </span><input type="text" autocomplete="off" id="search">
 		</div>
 		<ul class="nav nav-tabs">
 			<li id="appsList" class="active"><a>Приложения</a></li>
