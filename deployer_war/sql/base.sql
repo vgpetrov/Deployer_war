@@ -14,3 +14,12 @@ CREATE TABLE IF NOT EXISTS Hosts (
   web_port INTEGER,
   admin_port INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS Users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ,
+  login varchar(60) NOT NULL,
+  password varchar(40) NOT NULL
+);
+
+-- md5 password 123
+insert into users(login, password) values('admin', '202cb962ac59075b964b07152d234b70');

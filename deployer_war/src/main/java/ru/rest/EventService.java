@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -20,10 +21,10 @@ import ru.db.entities.Host;
 @Path("eventService")
 public class EventService {
 
-    // curl -i -X GET -H 'Content-Type: application/json' -d '{"eventName": "install", "productName":"NSI",
-    // "version":"02.008.00", "revision":"44220", "host":{"hostName":"newHost", "profile":"AppSrv02"}}'
+    // curl -i -X POST -H 'Content-Type: application/json' -d '{"eventName": "install", "productName":"NSI",
+    // "version":"02.008.00", "revision":"44220", "host":{"hostName":"newHost", "profile":"AppSrv02","webPort":"9081", "adminPort":"9061"}}'
     // http://localhost:8080/deployer_war/rest/eventService
-    @GET
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Event create(Event obj) {
