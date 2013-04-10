@@ -58,7 +58,8 @@ $(document)
                     $("#search").typeahead({
                         source : initHostList(),
                         updater : function(item) {
-                            console.log(map[item]);
+                            var pos = this.source.indexOf(item);
+                            console.log(pos);
                             close();
                             if ($("#appsList").attr("class") == "active") {
                                 showApplications(map[item]);
