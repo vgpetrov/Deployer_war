@@ -38,7 +38,6 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 //		SQLiteConnector connection = new SQLiteConnector();
 //		IGenericDAO<Host> generic = new HostDAO<Host>(connection.getConnection());
 //		generic.insert(new Host(3, "SAS", "ssad"));

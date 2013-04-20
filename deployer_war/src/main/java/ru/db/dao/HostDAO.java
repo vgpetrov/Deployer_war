@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ru.db.entities.Host;
 
 public class HostDAO implements IGenericDAO<Host> {
@@ -15,6 +17,8 @@ public class HostDAO implements IGenericDAO<Host> {
     private static final String insertSQL = "insert into hosts(host_name, profile, web_port, admin_port) values(?, ?, ?, ?)";
     private static final String selectSQL = "select * from hosts";
     private static final String selectSQLByNameAndProfile = "select * from hosts where host_name = ? and profile = ?";
+    
+    private static final Logger logger = Logger.getLogger(HostDAO.class);
 
     private Connection conn;
 
@@ -37,14 +41,14 @@ public class HostDAO implements IGenericDAO<Host> {
             pstm.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (pstm != null) {
                     pstm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -67,7 +71,7 @@ public class HostDAO implements IGenericDAO<Host> {
                 hostList.add(host);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (rs != null) {
@@ -77,7 +81,7 @@ public class HostDAO implements IGenericDAO<Host> {
                     stm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 
@@ -101,7 +105,7 @@ public class HostDAO implements IGenericDAO<Host> {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (rs != null) {
@@ -111,7 +115,7 @@ public class HostDAO implements IGenericDAO<Host> {
                     pstm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
         return host;

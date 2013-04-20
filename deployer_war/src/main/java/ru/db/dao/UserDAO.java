@@ -6,11 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ru.db.entities.User;
 
 public class UserDAO implements IGenericDAO<User> {
 
     private final static String checkUser = "select id from users where login = ? and password = ?";
+    private static final Logger logger = Logger.getLogger(UserDAO.class);
 
     private Connection conn;
 
@@ -40,7 +43,7 @@ public class UserDAO implements IGenericDAO<User> {
                 result = true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (rs != null) {
@@ -50,7 +53,7 @@ public class UserDAO implements IGenericDAO<User> {
                     pstm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 

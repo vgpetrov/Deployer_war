@@ -3,15 +3,18 @@ package ru.db.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 public class SQLiteConnector {
 
+    private static final Logger logger = Logger.getLogger(SQLiteConnector.class);
     private Connection connection;
 
     public SQLiteConnector() {
         try {
             this.connection = SQLiteDataSource.getDataSource().getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -23,7 +26,7 @@ public class SQLiteConnector {
         try {
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

@@ -13,6 +13,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.log4j.Logger;
+
 import ru.db.dao.EventDAO;
 import ru.db.dao.HostDAO;
 import ru.db.dao.IGenericDAO;
@@ -26,6 +28,8 @@ import ru.db.entities.User;
 @Path("securedService")
 public class SecuredService {
     
+    private static final Logger logger = Logger.getLogger(SecuredService.class);
+    
     private String getMd5Hash(String input) {
         String md5 = null;
         if (null == input)
@@ -35,7 +39,7 @@ public class SecuredService {
             digest.update(input.getBytes(), 0, input.length());
             md5 = new BigInteger(1, digest.digest()).toString(16);
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return md5;
     }

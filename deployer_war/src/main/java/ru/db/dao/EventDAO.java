@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import ru.db.entities.Event;
 import ru.db.entities.Host;
 
@@ -22,6 +24,8 @@ public class EventDAO implements IGenericDAO<Event> {
             + "from events where host_id = ? and product_name = ?";
     private static final String selectHistory = "select event_time, event, product_name, version, revision "
             + "from events where host_id = ?";
+    
+    private static final Logger logger = Logger.getLogger(EventDAO.class);
 
     private Connection conn;
 
@@ -46,14 +50,14 @@ public class EventDAO implements IGenericDAO<Event> {
             pstm.execute();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (pstm != null) {
                     pstm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -86,7 +90,7 @@ public class EventDAO implements IGenericDAO<Event> {
                 eventsList.add(event);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (rs != null) {
@@ -96,7 +100,7 @@ public class EventDAO implements IGenericDAO<Event> {
                     stm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 
@@ -125,7 +129,7 @@ public class EventDAO implements IGenericDAO<Event> {
                 eventsList.add(event);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (rs != null) {
@@ -135,7 +139,7 @@ public class EventDAO implements IGenericDAO<Event> {
                     pstm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 
@@ -165,7 +169,7 @@ public class EventDAO implements IGenericDAO<Event> {
                 eventsList.add(event);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (rs != null) {
@@ -175,7 +179,7 @@ public class EventDAO implements IGenericDAO<Event> {
                     pstm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 
@@ -204,7 +208,7 @@ public class EventDAO implements IGenericDAO<Event> {
                 eventsList.add(event);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             try {
                 if (rs != null) {
@@ -214,7 +218,7 @@ public class EventDAO implements IGenericDAO<Event> {
                     pstm.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
 

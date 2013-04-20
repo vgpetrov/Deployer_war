@@ -4,8 +4,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import org.apache.log4j.Logger;
+
 public class SQLiteDataSource {
 
+    private static final Logger logger = Logger.getLogger(SQLiteDataSource.class);
     private static volatile DataSource dataSource;
 
     private SQLiteDataSource() {
@@ -20,7 +23,7 @@ public class SQLiteDataSource {
                         ic = new InitialContext();
                         dataSource = (DataSource) ic.lookup("java:comp/env/jdbc/SQLiteDS");
                     } catch (NamingException e) {
-                        e.printStackTrace();
+                        logger.error(e.getMessage(), e);
                     }
                 }
             }
