@@ -1,4 +1,4 @@
-Deployer_war
+Application Topology Manager
 ============
 
 Project based on Java with Jetty for appserv, Jersey for rest, Maven builder and SQLite databse.
@@ -7,3 +7,8 @@ OPTIONS=Server,jsp,jmx,resources,websocket,ext,plus,annotations
 and config
 etc/jetty-plus.xml
 to work with DataSource.
+
+How To Run
+============
+Compile: mvn clean package
+Run: mvn jetty:run
