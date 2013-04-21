@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Configure PUBLIC "-//Mort Bay Consulting//DTD Configure//EN" "http://jetty.mortbay.org/configure.dtd">
-<Configure id='sample' class="org.eclipse.jetty.webapp.WebAppContext">
+<Configure id='Server' class="org.eclipse.jetty.server.Server">
 	<New id="SQLiteDS" class="org.eclipse.jetty.plus.jndi.Resource">
 		<Arg>jdbc/SQLiteDS</Arg>
 		<Arg>
 			<New class="org.sqlite.SQLiteDataSource">
-				<Set name="Url">jdbc:sqlite:/Users/admin/MySQLiteDB</Set>
+				<Set name="Url">jdbc:sqlite:apptopology.sqlite</Set>
 				<!--Set name="User">admin</Set>
 				<Set name="Password">1qa@WS3ed</Set-->
 			</New>
