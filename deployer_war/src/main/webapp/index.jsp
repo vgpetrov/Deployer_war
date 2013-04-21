@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Deployer</title>
+<title>Application Topology Manager</title>
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="css/jquery.dataTables.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery.js"></script>
@@ -15,7 +15,7 @@
 <body>
 	<div class="navbar">
 		<div class="navbar-inner">
-			<a class="brand" href="#">Deployer</a>
+			<a class="brand" href="#">Application Topology Manager</a>
 		</div>
 	</div>
 	<div class="container">
