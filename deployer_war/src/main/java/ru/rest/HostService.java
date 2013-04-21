@@ -13,10 +13,10 @@ import ru.db.dao.IGenericDAO;
 import ru.db.dao.SQLiteConnector;
 import ru.db.entities.Host;
 
-@Path("hostService")
+@Path("host")
 public class HostService {
 
-    // curl -i -X GET -H 'Content-Type: application/json' -d '{"hostName":"newHost","profile":"AppSrv03","webPort":"9081", "adminPort":"9061"}' http://localhost:8080/deployer_war/rest/hostService
+    // curl -i -X GET -H 'Content-Type: application/json' -d '{"hostName":"newHost","profile":"AppSrv03","webPort":"9081", "adminPort":"9061"}' http://localhost:8080/rest/host
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,7 +34,7 @@ public class HostService {
         return host;
     }
 
-    // curl -i -X GET http://localhost:8080/deployer_war/rest/hostService/list
+    // curl -i -X GET http://localhost:8080/rest/host/list
     @Path("/list")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
