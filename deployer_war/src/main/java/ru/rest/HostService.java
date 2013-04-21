@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -16,8 +17,8 @@ import ru.db.entities.Host;
 @Path("host")
 public class HostService {
 
-    // curl -i -X GET -H 'Content-Type: application/json' -d '{"hostName":"newHost","profile":"AppSrv03","webPort":"9081", "adminPort":"9061"}' http://localhost:8080/rest/host
-    @GET
+    // curl -i -X PUT -H 'Content-Type: application/json' -d '{"hostName":"newHost","profile":"AppSrv03","webPort":"9081", "adminPort":"9061"}' http://localhost:8080/rest/host
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Host create(Host obj) {
@@ -34,8 +35,7 @@ public class HostService {
         return host;
     }
 
-    // curl -i -X GET http://localhost:8080/rest/host/list
-    @Path("/list")
+    // curl -i -X GET http://localhost:8080/rest/host/
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Host> getList() {
