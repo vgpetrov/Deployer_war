@@ -1,9 +1,14 @@
 Application Topology Manager
 ============
 
+How To Run
+============
+- Compile: mvn clean package
+- Run: mvn jetty:run
+
 Dependency
 ============
-Project based on Java with 
+Project based on Java (1.6) with 
 - Jetty for appserv
 - Jersey for rest
 - Maven builder
@@ -18,7 +23,3 @@ and config
 etc/jetty-plus.xml
 to work with DataSource.
 
-How To Run
-============
-Compile: mvn clean package
-Run: mvn jetty:run
