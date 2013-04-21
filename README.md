@@ -1,7 +1,17 @@
 Application Topology Manager
 ============
 
-Project based on Java with Jetty for appserv, Jersey for rest, Maven builder and SQLite databse.
+Dependency
+============
+Project based on Java with 
+- Jetty for appserv
+- Jersey for rest
+- Maven builder
+- SQLite database.
+
+Configuration
+============
+
 In that project i have a DataSource and you must configure jetty start.ini file with that options
 OPTIONS=Server,jsp,jmx,resources,websocket,ext,plus,annotations
 and config
