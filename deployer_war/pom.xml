@@ -2,13 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.deployer</groupId>
-	<artifactId>deployer_war</artifactId>
+	<artifactId>apptopology</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<!-- TODO 1 Pick the version of jetty you want. -->
 	<properties>
-		<jetty.version>8.1.9.v20130131</jetty.version>
+		<jetty.version>9.0.2.v20130417</jetty.version>
 	</properties>
 
 	<!-- TODO 2 Configure repo2.maven.org as a repository. -->
