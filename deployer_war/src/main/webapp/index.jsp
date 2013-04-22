@@ -5,10 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Application Topology Manager</title>
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="css/custom.css" rel="stylesheet" media="screen">
 <link href="css/jquery.dataTables.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
 <script src="js/jquery.dataTables.js"></script>
 <script src="scripts/deployerView.js"></script>
 </head>
@@ -19,13 +20,17 @@
 		</div>
 	</div>
 	<div class="container">
-		<div>
-			<span>Выбрать сервер </span><input type="text" autocomplete="off" id="search">
+		<div style="margin-bottom: 20px;">
+			<span>Выбрать сервер </span>
+			<input type="text" autocomplete="off" id="search">
+			<button class="btn btn-primary" id="refreshButton" type="button">Обновить</button>
+			<a id="adminLink" style="display:none" href="#">В консоль администратора</a>
 		</div>
 		<ul class="nav nav-tabs">
 			<li id="appsList" class="active"><a>Приложения</a></li>
 			<li id="historyList"><a>История сервера</a></li>
 			<li id="appHistoryList"><a>История приложения</a></li>
+			<li id="advancedSearchList"><a>Расширенный поиск</a></li>
 		</ul>
 	</div>
 </body>

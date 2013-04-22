@@ -1,14 +1,15 @@
 $(document)
         .ready(
                 function() {
+                    
                     function initHostList() {
                         res = [];
+                        adminPorts = [];
                         map = {};
-                        $
-                                .ajax({
+                        $.ajax({
                                     type : "GET",
                                     dataType : "json",
-                                    url : "/deployer_war/rest/hostService/list",
+                                    url : "/rest/host/",
                                 })
                                 .done(
                                         function(result) {
@@ -19,9 +20,8 @@ $(document)
                                                 } else {
                                                     for ( var i = 0; i < result.host.length; i++) {
                                                         map[result.host[i].hostName + " " + result.host[i].profile] = result.host[i].id;
-                                                        res
-                                                                .push(result.host[i].hostName + " "
-                                                                        + result.host[i].profile);
+                                                        adminPorts[result.host[i].hostName + " " + result.host[i].profile] = result.host[i].adminPort;
+                                                        res.push(result.host[i].hostName + " " + result.host[i].profile);
                                                     }
                                                 }
                                             }
@@ -58,16 +58,21 @@ $(document)
                     $("#search").typeahead({
                         source : initHostList(),
                         updater : function(item) {
-                            var pos = this.source.indexOf(item);
-                            console.log(pos);
                             close();
+                            var pos = this.source.indexOf(item);
                             if ($("#appsList").attr("class") == "active") {
                                 showApplications(map[item]);
+                                $("#adminLink").attr("href","http://"+(item.split(" "))[0]+":"+adminPorts[item]+"/ibm/console")
+                                               .css("display","block");
                             } else if ($("#historyList").attr("class") == "active") {
                                 showHistory(map[item]);
                             }
                             return item;
                         }
+                    });
+                    
+                    $("#refreshButton").click(function() {
+                        $("#search").data("typeahead").source = initHostList();
                     });
 
                     function showApplications(id) {
@@ -79,7 +84,7 @@ $(document)
                             $('#resTabList').dataTable({
                                 "sPaginationType" : "full_numbers",
                                 "bProcessing" : true,
-                                "sAjaxSource" : "/deployer_war/rest/eventService/" + id,
+                                "sAjaxSource" : "/rest/eventService/" + id,
                                 "sAjaxDataProp" : "event",
                                 "oLanguage" : ruLang(),
                                 "aoColumns" : [ {
@@ -102,6 +107,7 @@ $(document)
                                 $("#historyList").removeAttr("class");
                                 $("#appsList").removeAttr("class");
                                 $("#appHistoryList").attr("class", "active");
+                                $("#advancedSearchList").removeAttr("class");
                                 close();
                                 showAppsHistory(hostId, appName);
                             });
@@ -117,7 +123,7 @@ $(document)
                             $('#resTabList').dataTable({
                                 "sPaginationType" : "full_numbers",
                                 "bProcessing" : true,
-                                "sAjaxSource" : "/deployer_war/rest/eventService/" + id + "/" + appName,
+                                "sAjaxSource" : "/rest/eventService/" + id + "/" + appName,
                                 "sAjaxDataProp" : "event",
                                 "oLanguage" : ruLang(),
                                 "aoColumns" : [ {
@@ -149,7 +155,7 @@ $(document)
                             $('#resTabList').dataTable({
                                 "sPaginationType" : "full_numbers",
                                 "bProcessing" : true,
-                                "sAjaxSource" : "/deployer_war/rest/eventService/" + id + "/list",
+                                "sAjaxSource" : "/rest/eventService/" + id + "/list",
                                 "sAjaxDataProp" : "event",
                                 "oLanguage" : ruLang(),
                                 "aoColumns" : [ {
@@ -171,6 +177,15 @@ $(document)
                             });
                         }
                     }
+                    
+                    function showAdvancedSearch() {
+                        $(".container").append("<div id='lists'></div>");
+                        $("#lists").append("<div id='advSearchMenu' style='width: 300px;'></div>");
+                        $("#advSearchMenu").append("<input class='input-block-level' style='margin-bottom:15px' type='text' placeholder='Компонент...'>");
+                        $("#advSearchMenu").append("<input class='input-block-level' style='margin-bottom:15px' type='text' placeholder='Ревизия...'>");
+                        $("#advSearchMenu").append("<input class='input-block-level' style='margin-bottom:15px' type='text' placeholder='Версия...'>");
+                        $("#advSearchMenu").append("<button class='btn btn-primary' style='float:right' id='advancedSearchButton' type='button'>Найти</button>");
+                    }
 
                     function close() {
                         $("#lists").remove();
@@ -180,6 +195,7 @@ $(document)
                         $("#historyList").removeAttr("class");
                         $("#appHistoryList").removeAttr("class");
                         $("#appsList").attr("class", "active");
+                        $("#advancedSearchList").removeAttr("class");
                         close();
                         showApplications(map[$("#search").val()]);
                     });
@@ -188,8 +204,18 @@ $(document)
                         $("#appsList").removeAttr("class");
                         $("#appHistoryList").removeAttr("class");
                         $("#historyList").attr("class", "active");
+                        $("#advancedSearchList").removeAttr("class");
                         close();
                         showHistory(map[$("#search").val()]);
+                    });
+                    
+                    $("#advancedSearchList").click(function() {
+                        $("#appsList").removeAttr("class");
+                        $("#appHistoryList").removeAttr("class");
+                        $("#historyList").removeAttr("class");
+                        $("#advancedSearchList").attr("class", "active");
+                        close();
+                        showAdvancedSearch();
                     });
 
                 });
