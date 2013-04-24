@@ -54,7 +54,7 @@ public class EventService {
         return event;
     }
 
-    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/list
+    // curl -i -X GET http://localhost:8080/rest/eventService/list
     @GET
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ public class EventService {
         return result;
     }
 
-    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/2
+    // curl -i -X GET http://localhost:8080/rest/eventService/2
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -78,7 +78,7 @@ public class EventService {
         return result;
     }
 
-    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/2/NSI
+    // curl -i -X GET http://localhost:8080/rest/eventService/2/NSI
     @GET
     @Path("/{id}/{name}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,7 +90,7 @@ public class EventService {
         return result;
     }
 
-    // curl -i -X GET http://localhost:8080/deployer_war/rest/eventService/1/list
+    // curl -i -X GET http://localhost:8080/rest/eventService/1/list
     @GET
     @Path("/{id}/list")
     @Produces(MediaType.APPLICATION_JSON)

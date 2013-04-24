@@ -20,18 +20,25 @@
 		</div>
 	</div>
 	<div class="container">
-		<div style="margin-bottom: 20px;">
-			<span>Выбрать сервер </span>
-			<input type="text" autocomplete="off" id="search">
-			<button class="btn btn-primary" id="refreshButton" type="button">Обновить</button>
-			<a id="adminLink" style="display:none" href="#">В консоль администратора</a>
-		</div>
 		<ul class="nav nav-tabs">
 			<li id="appsList" class="active"><a>Приложения</a></li>
 			<li id="historyList"><a>История сервера</a></li>
 			<li id="appHistoryList"><a>История приложения</a></li>
 			<li id="advancedSearchList"><a>Расширенный поиск</a></li>
 		</ul>
+		<div>
+			<div id="serverNavigation">
+				<span>Выбрать сервер </span>
+				<input type="text" autocomplete="off" id="search">
+				<button class="btn btn-primary" id="refreshButton" type="button">Обновить</button>
+			</div>
+			<div id="advancedSearch">
+				<input class="span2" type="text" placeholder="Компонент...">
+				<input class="span2" type="password" placeholder="Версия...">
+				<input class="span2" type="password" placeholder="Ревизия...">
+				<button class="btn btn-primary" id="advancedSearchButton" type="button">Найти</button>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

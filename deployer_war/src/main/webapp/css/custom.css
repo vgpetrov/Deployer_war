@@ -1,3 +1,11 @@
 #adminLink {
 	float: right;
 }
+
+#serverNavigation {
+	margin-bottom: 20px;
+}
+
+#advancedSearch {
+	display: none;
+}

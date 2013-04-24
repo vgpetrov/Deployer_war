@@ -4,7 +4,6 @@ $(document)
                     
                     function initHostList() {
                         res = [];
-                        adminPorts = [];
                         map = {};
                         $.ajax({
                                     type : "GET",
@@ -20,7 +19,6 @@ $(document)
                                                 } else {
                                                     for ( var i = 0; i < result.host.length; i++) {
                                                         map[result.host[i].hostName + " " + result.host[i].profile] = result.host[i].id;
-                                                        adminPorts[result.host[i].hostName + " " + result.host[i].profile] = result.host[i].adminPort;
                                                         res.push(result.host[i].hostName + " " + result.host[i].profile);
                                                     }
                                                 }
@@ -62,8 +60,6 @@ $(document)
                             var pos = this.source.indexOf(item);
                             if ($("#appsList").attr("class") == "active") {
                                 showApplications(map[item]);
-                                $("#adminLink").attr("href","http://"+(item.split(" "))[0]+":"+adminPorts[item]+"/ibm/console")
-                                               .css("display","block");
                             } else if ($("#historyList").attr("class") == "active") {
                                 showHistory(map[item]);
                             }
@@ -108,6 +104,8 @@ $(document)
                                 $("#appsList").removeAttr("class");
                                 $("#appHistoryList").attr("class", "active");
                                 $("#advancedSearchList").removeAttr("class");
+                                $("#advancedSearch").css("display","none");
+                                $("#serverNavigation").css("display","block");
                                 close();
                                 showAppsHistory(hostId, appName);
                             });
@@ -178,14 +176,9 @@ $(document)
                         }
                     }
                     
-                    function showAdvancedSearch() {
-                        $(".container").append("<div id='lists'></div>");
-                        $("#lists").append("<div id='advSearchMenu' style='width: 300px;'></div>");
-                        $("#advSearchMenu").append("<input class='input-block-level' style='margin-bottom:15px' type='text' placeholder='Компонент...'>");
-                        $("#advSearchMenu").append("<input class='input-block-level' style='margin-bottom:15px' type='text' placeholder='Ревизия...'>");
-                        $("#advSearchMenu").append("<input class='input-block-level' style='margin-bottom:15px' type='text' placeholder='Версия...'>");
-                        $("#advSearchMenu").append("<button class='btn btn-primary' style='float:right' id='advancedSearchButton' type='button'>Найти</button>");
-                    }
+                    $("#advancedSearchButton").click(function() {
+                        
+                    });
 
                     function close() {
                         $("#lists").remove();
@@ -196,6 +189,8 @@ $(document)
                         $("#appHistoryList").removeAttr("class");
                         $("#appsList").attr("class", "active");
                         $("#advancedSearchList").removeAttr("class");
+                        $("#advancedSearch").css("display","none");
+                        $("#serverNavigation").css("display","block");
                         close();
                         showApplications(map[$("#search").val()]);
                     });
@@ -205,6 +200,8 @@ $(document)
                         $("#appHistoryList").removeAttr("class");
                         $("#historyList").attr("class", "active");
                         $("#advancedSearchList").removeAttr("class");
+                        $("#advancedSearch").css("display","none");
+                        $("#serverNavigation").css("display","block");
                         close();
                         showHistory(map[$("#search").val()]);
                     });
@@ -214,8 +211,9 @@ $(document)
                         $("#appHistoryList").removeAttr("class");
                         $("#historyList").removeAttr("class");
                         $("#advancedSearchList").attr("class", "active");
+                        $("#advancedSearch").css("display","block");
+                        $("#serverNavigation").css("display","none");
                         close();
-                        showAdvancedSearch();
                     });
 
                 });
