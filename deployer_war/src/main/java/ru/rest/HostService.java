@@ -50,7 +50,7 @@ public class HostService {
         return result;
     }
 
-    // curl -i -X GET -H 'Content-Type: application/json' -d '{"productName":"NSI","version":"02.008.00","revision":"44220"}' http://localhost:8080/rest/host/list
+    // curl -i -X POST -H 'Content-Type: application/json' -d '{"productName":"NSI","version":"02.008.00","revision":"44220"}' http://localhost:8080/rest/host/list
     @POST
     @Path("/list")
     @Consumes(MediaType.APPLICATION_JSON)

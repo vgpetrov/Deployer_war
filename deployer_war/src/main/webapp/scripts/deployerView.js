@@ -2,6 +2,13 @@ $(document)
         .ready(
                 function() {
                     
+                    init = function() {
+                        $("#search").val("");
+                        $("#product").val("");
+                        $("#version").val("");
+                        $("#revision").val("");
+                    }();
+                    
                     function initHostList() {
                         res = [];
                         map = {};
@@ -52,7 +59,6 @@ $(document)
                         };
                     }
 
-                    $("#search").val("");
                     $("#search").typeahead({
                         source : initHostList(),
                         updater : function(item) {
@@ -177,7 +183,43 @@ $(document)
                     }
                     
                     $("#advancedSearchButton").click(function() {
-                        
+                        close();
+                        $(".container").append("<div id='lists'></div>");
+                        $("#lists")
+                                .append(
+                                        "<table cellpadding='0' cellspacing='0' border='0' class='display' id='resTabList'></table>");
+                        $('#resTabList').dataTable({
+                            "sPaginationType" : "full_numbers",
+                            "bProcessing" : true,
+                            "sAjaxSource" : "/rest/host/list",
+                            "sAjaxDataProp" : "host",
+                            "oLanguage" : ruLang(),
+                            "fnServerData": function ( sSource, aoData, fnCallback ) {
+                                    aoData = '{"productName":"'+$("#product").val()+'",' 
+                                        +'"version":"'+$("#version").val()+'",' 
+                                        +'"revision":"'+$("#revision").val()+'"}';
+                                    $.ajaxSetup({
+                                        contentType: "application/json; charset=utf-8"
+                                    });
+                                    $.post(sSource, aoData, function (json) {
+                                                                fnCallback(json); 
+                                                             },
+                                            'json');
+                            },
+                            "aoColumns" : [ {
+                                "mData" : "hostName",
+                                "sTitle" : "Хост"
+                            }, {
+                                "mData" : "profile",
+                                "sTitle" : "Профиль"
+                            }, {
+                                "mData" : "adminPort",
+                                "sTitle" : "Admin порт"
+                            }, {
+                                "mData" : "webPort",
+                                "sTitle" : "Http порт"
+                            }  ]
+                        });
                     });
 
                     function close() {

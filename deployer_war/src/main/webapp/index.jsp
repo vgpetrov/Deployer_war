@@ -33,9 +33,9 @@
 				<button class="btn btn-primary" id="refreshButton" type="button">Обновить</button>
 			</div>
 			<div id="advancedSearch">
-				<input class="span2" type="text" placeholder="Компонент...">
-				<input class="span2" type="password" placeholder="Версия...">
-				<input class="span2" type="password" placeholder="Ревизия...">
+				<input class="span2" id="product" type="text" placeholder="Компонент...">
+				<input class="span2" id="version" type="text" placeholder="Версия...">
+				<input class="span2" id="revision" type="text" placeholder="Ревизия...">
 				<button class="btn btn-primary" id="advancedSearchButton" type="button">Найти</button>
 			</div>
 		</div>
