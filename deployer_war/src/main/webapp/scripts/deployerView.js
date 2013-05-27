@@ -30,6 +30,13 @@ $(document)
                                                     }
                                                 }
                                             }
+                                            var expr = new RegExp('http://[A-Za-z0-9\\:]*/server/([A-Za-z0-9]*)/profile/([A-Za-z0-9]*)');
+                                            var key = location.href.replace(expr, "$1 $2");
+                                            var profileId = map[key];
+                                            if (profileId!=undefined) {
+                                                $("#search").val(key);
+                                                showApplications(profileId);
+                                            }
                                             return res;
                                         });
                         return res;
@@ -65,6 +72,9 @@ $(document)
                             close();
                             var pos = this.source.indexOf(item);
                             if ($("#appsList").attr("class") == "active") {
+                                var profile = item.split(' ');
+                                window.history.pushState("object or string", "Title", 
+                                        "/server/"+profile[0]+"/profile/"+profile[1]);
                                 showApplications(map[item]);
                             } else if ($("#historyList").attr("class") == "active") {
                                 showHistory(map[item]);

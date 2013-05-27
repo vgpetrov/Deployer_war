@@ -23,7 +23,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>IndexServlet</servlet-name>
-		<url-pattern>/IndexServlet</url-pattern>
+		<url-pattern>/server/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Jersey Web Application</servlet-name>

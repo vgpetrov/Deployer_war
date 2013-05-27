@@ -1,17 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Application Topology Manager</title>
-<link href="css/bootstrap.css" rel="stylesheet" media="screen">
-<link href="css/custom.css" rel="stylesheet" media="screen">
-<link href="css/jquery.dataTables.css" rel="stylesheet" media="screen">
+<c:set var="serverHostPort" value="${pageContext.request.serverName}:${pageContext.request.serverPort}"/> 
+<link href="//${serverHostPort}/css/bootstrap.css" rel="stylesheet" media="screen">
+<link href="//${serverHostPort}/css/custom.css" rel="stylesheet" media="screen">
+<link href="//${serverHostPort}/css/jquery.dataTables.css" rel="stylesheet" media="screen">
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.dataTables.js"></script>
-<script src="scripts/deployerView.js"></script>
+<script src="//${serverHostPort}/js/bootstrap.js"></script>
+<script src="//${serverHostPort}/js/jquery.dataTables.js"></script>
+<script src="//${serverHostPort}/scripts/deployerView.js"></script>
 </head>
 <body>
 	<div class="navbar">
