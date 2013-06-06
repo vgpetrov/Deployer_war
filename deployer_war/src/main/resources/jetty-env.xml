@@ -5,7 +5,7 @@
 		<Arg>jdbc/SQLiteDS</Arg>
 		<Arg>
 			<New class="org.sqlite.SQLiteDataSource">
-				<Set name="Url">jdbc:sqlite:apptopology.sqlite</Set>
+				<Set name="Url">jdbc:sqlite:/Users/admin/MySQLiteDB</Set>
 				<!--Set name="User">admin</Set>
 				<Set name="Password">1qa@WS3ed</Set-->
 			</New>

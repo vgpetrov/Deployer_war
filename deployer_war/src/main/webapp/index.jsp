@@ -12,6 +12,9 @@
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="//${serverHostPort}/js/bootstrap.js"></script>
 <script src="//${serverHostPort}/js/jquery.dataTables.js"></script>
+
+<script src="//${serverHostPort}/scripts/DataTablesRus.js"></script>
+<script src="//${serverHostPort}/scripts/Actions.js"></script>
 <script src="//${serverHostPort}/scripts/deployerView.js"></script>
 </head>
 <body>
